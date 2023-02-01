@@ -25,6 +25,6 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     receive_thread.start()
     while True:
         # Send messages to da server
-        message = input('{username}:')
+        message = input(':')
         s.sendall(message.encode())
 
