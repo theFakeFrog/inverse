@@ -1,8 +1,8 @@
 import socket
 import threading
 import os
-IP = input("input ip: ")    # server IP input
-print("default port 226")
+print("inverse client v0.3
+IP = input("input ip (default port 226: ")    # server IP input
 HOST = IP     # server IP address
 PORT = 226    # server port
 
