@@ -1,6 +1,6 @@
 import socket
 import threading
-print("inverse server 0.2")
+print("inverse server 0.2.1")
 # List of all servers
 #federated_servers = [('127.0.0.1', 226), ('127.0.0.1', 227), ('127.0.0.1', 228)]
 federated_servers = [('192.168.1.4', 226)]
@@ -25,7 +25,7 @@ def handle_client(conn, addr, server_id):
                 break
             # Broadcast the message to all clients
             for client, (client_username, client_server_id) in clients.items():
-                client.sendall(f'{username}@{server_id}: {data.decode()}'.encode())
+                client.sendall(f'{username}${server_id}: {data.decode()}'.encode())
         # Remove the client and notify other clients
         del clients[conn]
         print(f'{username} has left the chat')
