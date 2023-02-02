@@ -10,7 +10,7 @@ clients = {}
 # Handling incoming connections
 def handle_client(conn, addr, server_id):
     with conn:
-        print(f'Connected by {addr}')
+        print(f'Connected by {server_id}')
         conn.sendall(b'Connected to server!')  # welcome msg
         username = conn.recv(1024).decode()
         # Add client to the dictionary with their username and server
