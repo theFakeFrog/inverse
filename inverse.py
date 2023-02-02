@@ -1,6 +1,7 @@
 import socket
 import threading
-print("inverse server 0.2.1")
+
+print("inverse server 0.2.4")
 # List of all servers
 #federated_servers = [('127.0.0.1', 226), ('127.0.0.1', 227), ('127.0.0.1', 228)]
 federated_servers = [('192.168.1.4', 226)]
@@ -13,6 +14,10 @@ def handle_client(conn, addr, server_id):
         print(f'Connected by {server_id}')
         conn.sendall(b'Connected to server!')  # welcome msg
         username = conn.recv(1024).decode()
+        if len(username) > 8:
+            conn.sendall(b'Username too long. Maximum 20 characters allowed.')
+            conn.close()
+            return
         # Add client to the dictionary with their username and server
         clients[conn] = (username, server_id)
         print(f'{username} has joined')
