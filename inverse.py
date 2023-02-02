@@ -1,6 +1,6 @@
 import socket
 import threading
-
+print("inverse server 0.2")
 # List of all servers
 #federated_servers = [('127.0.0.1', 226), ('127.0.0.1', 227), ('127.0.0.1', 228)]
 federated_servers = [('192.168.1.4', 226)]
