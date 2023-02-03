@@ -1,7 +1,7 @@
 import socket
 import threading
 import json
-
+print("PLEASE CHANGE THE CONFIG TO YOUR NEEDS!")
 print("inverse server 0.2.5")
 
 # Load configuration from file
