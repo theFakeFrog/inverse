@@ -1,20 +1,25 @@
 import socket
 import threading
+import json
 
-print("inverse server 0.2.4")
-# List of all servers
-#federated_servers = [('127.0.0.1', 226), ('127.0.0.1', 227), ('127.0.0.1', 228)]
-federated_servers = [('192.168.1.4', 226)]
+print("inverse server 0.2.5")
+
+# Load configuration from file
+with open("config.json") as f:
+    config = json.load(f)
+
+federated_servers = config["federated_servers"]
+
 # Stores clients and server info
 clients = {}
 
 # Handling incoming connections
 def handle_client(conn, addr, server_id):
     with conn:
-        print(f'Connected by {server_id}')
+        print(f'Connected from server ID {server_id}')
         conn.sendall(b'Connected to server!')  # welcome msg
         username = conn.recv(1024).decode()
-        if len(username) > 8:
+        if len(username) > 20:
             conn.sendall(b'Username too long. Maximum 20 characters allowed.')
             conn.close()
             return
