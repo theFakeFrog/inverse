@@ -2,7 +2,7 @@ import socket
 import sys
 from plyer import notification
 import threading
-print("v0.3.0")
+
 # Load configuration from file
 federated_servers = [("192.168.1.4", 226), ("192.168.1.4", 227)]
 
