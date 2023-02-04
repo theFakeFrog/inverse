@@ -1,7 +1,8 @@
 import socket
 import sys
+from plyer import notification
 import threading
-
+print("v0.3.0")
 # Load configuration from file
 federated_servers = [("192.168.1.4", 226), ("192.168.1.4", 227)]
 
@@ -12,6 +13,13 @@ for i, (host, port) in enumerate(federated_servers):
 server_id = int(input().strip())
 host, port = federated_servers[server_id]
 
+notification.notify(
+    title="inverse client",
+    message=f"connected to server ID {i}",
+    app_name="inverse",
+    timeout=10
+)
+
 def receive_messages(s):
     while True:
         # get messages from server
@@ -19,6 +27,13 @@ def receive_messages(s):
         if not message:
             break
         print(message)
+        notification.notify(
+    title="inverse client",
+    message=f"{message}",
+    app_name="inverse",
+    timeout=10
+)
+
 
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     s.connect((host, port))
@@ -36,4 +51,3 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
 
     s.close()
     print("Connection closed")
-
