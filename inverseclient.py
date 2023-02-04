@@ -1,12 +1,18 @@
 import socket
+import sys
 import threading
-import os
-print("inverse client v0.3.1")
-IP = input("input ip (default port 226): ")    # server IP input
-HOST = IP     # server IP address
-PORT = 226    # server port
 
-def receive_messages():
+# Load configuration from file
+federated_servers = [("192.168.1.4", 226), ("192.168.1.4", 227)]
+
+print("Enter the federated server ID you want to connect to:")
+for i, (host, port) in enumerate(federated_servers):
+    print(f"{i}: {host}:{port}")
+
+server_id = int(input().strip())
+host, port = federated_servers[server_id]
+
+def receive_messages(s):
     while True:
         # get messages from server
         message = s.recv(4096).decode()
@@ -15,16 +21,19 @@ def receive_messages():
         print(message)
 
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-    s.connect((HOST, PORT))
+    s.connect((host, port))
     # welcome message and prompt for a username
     print(s.recv(1024).decode())
     username = input('username: ')
     s.sendall(username.encode())
     # start a new thread to receive messages
-    receive_thread = threading.Thread(target=receive_messages)
+    receive_thread = threading.Thread(target=receive_messages, args=(s,))
     receive_thread.start()
     while True:
         # Send messages to da server
         message = input(':')
         s.sendall(message.encode())
+
+    s.close()
+    print("Connection closed")
 
