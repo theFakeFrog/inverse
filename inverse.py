@@ -55,4 +55,4 @@ def handle_federated_server(server_id, host, port):
 # Create and start the threads for each server
 for server_id, (host, port) in enumerate(federated_servers):
     threading.Thread(target=handle_federated_server, args=(server_id, host, port)).start()
-
+connection.close()
