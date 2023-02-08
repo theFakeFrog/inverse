@@ -3,7 +3,7 @@ import sys
 from plyer import notification
 import threading
 import json
-
+print("inverse v2.6")
 # Load config file
 with open("userconfig.json") as f:
     config = json.load(f)
