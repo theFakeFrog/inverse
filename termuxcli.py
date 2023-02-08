@@ -2,7 +2,7 @@ import socket
 import sys
 import threading
 import json
-
+print("inverse 2.6")
 # Load config file
 with open("userconfig.json") as f:
     config = json.load(f)
