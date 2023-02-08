@@ -1,8 +1,6 @@
 import socket
 import threading
 import json
-print("PLEASE CHANGE THE CONFIG TO YOUR NEEDS!")
-print("inverse server 0.2.6")
 
 # Load configuration from file
 with open("config.json") as f:
@@ -29,13 +27,16 @@ def handle_client(conn, addr, server_id):
         # Broadcast a message to clients to notify of the new user
         for client, (client_username, client_server_id) in clients.items():
             client.sendall(f'{username} has joined the chat from server {server_id}'.encode())
-        while True:
-            data = conn.recv(4096)
-            if not data:
-                break
-            # Broadcast the message to all clients
-            for client, (client_username, client_server_id) in clients.items():
-                client.sendall(f'{username}${server_id}: {data.decode()}'.encode())
+        try:
+            while True:
+                data = conn.recv(4096)
+                if not data:
+                    raise Exception('Client disconnected')
+                # Broadcast the message to all clients
+                for client, (client_username, client_server_id) in clients.items():
+                    client.sendall(f'{username}${server_id}: {data.decode()}'.encode())
+        except Exception as e:
+            print(e)
         # Remove the client and notify other clients
         del clients[conn]
         print(f'{username} has left the chat')
@@ -55,4 +56,3 @@ def handle_federated_server(server_id, host, port):
 # Create and start the threads for each server
 for server_id, (host, port) in enumerate(federated_servers):
     threading.Thread(target=handle_federated_server, args=(server_id, host, port)).start()
-connection.close()
