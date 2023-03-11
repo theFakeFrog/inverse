@@ -1,6 +1,5 @@
 import socket
 import sys
-from plyer import notification
 import threading
 import json
 print("inverse v2.6")
@@ -10,20 +9,12 @@ with open("userconfig.json") as f:
 
     federated_servers = config["federated_servers"]
 
-print("Enter the federated server ID you want to connect to:")
+print("Enter the server ID you want to connect to:")
 for i, (host, port) in enumerate(federated_servers):
     print(f"{i}: {host}:{port}")
 
 server_id = int(input().strip())
 host, port = federated_servers[server_id]
-
-notification.notify(
-    title="inverse client",
-    message=f"connected to server ID {i}",
-#    app_icon='inverse.png',
-    app_name="inverse",
-    timeout=5
-)
 
 def receive_messages(s):
     while True:
@@ -32,14 +23,6 @@ def receive_messages(s):
         if not message:
             break
         print(message)
-        notification.notify(
-    title="inverse client",
-    message=f"{message}",
-#    app_icon='inverse.png',
-    app_name="inverse",
-    timeout=5
-)
-
 
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     s.connect((host, port))
