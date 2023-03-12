@@ -15,7 +15,7 @@ clients = {}
 def handle_client(conn, addr, server_id):
     with conn:
         print(f'Connected from server ID {server_id}')
-        conn.sendall(b'Connected to server! This server is on version 0.3')  # welcome msg
+        conn.sendall(b'Connected to server! This server is on version 0.3.1')  # welcome msg
         username = conn.recv(1024).decode()
         if len(username) > 20:
             conn.sendall(b'Username too long. Maximum 20 characters allowed.')
